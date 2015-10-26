@@ -1,10 +1,10 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="col-xs-2"></div>
-    <div class="col-xs-8" ng-app="webview" ng-controller="mainController">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10" ng-app="webview" ng-controller="mainController">
         <h2 class="text-center text-capitalize">Enter a URL to fetch</h2>
-        <form name="uriForm">
+        <form name="uriForm" ng-submit="submit()">
             <div class="input-group">
                 <span class="input-group-addon">
                     <i ng-class="{
@@ -24,8 +24,19 @@
             </div>
             <button ng-disabled="uriForm.$valid !== true" class="btn btn-primary btn-block" type="submit">Search</button>
         </form>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="text-center">Click on the tag type to highlight.</p>
+            </div>
+
+            <div class="col-sm-6">
+                <code>
+                </code>
+            </div>
+        </div>
     </div>
-    <div class="col-xs-2"></div>
+    <div class="col-xs-1"></div>
 {% endblock %}
 
 {% block javascripts %}
