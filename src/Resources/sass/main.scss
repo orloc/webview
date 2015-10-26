@@ -1,3 +1,5 @@
+$selected: desaturate(lighten(#002a80, 20), 50);
+
 body {
   padding-top: 70px;
   font-family: 'Roboto', sans-serif;
@@ -15,4 +17,29 @@ form {
   button {
     margin-top: 10px;
   }
+}
+
+.tag {
+  padding: 5px;
+  &:hover {
+    background-color: lighten($selected, 10);
+    color: white;
+    cursor: pointer;
+
+    .text-success {
+      color: white;
+    }
+  }
+
+  &.selected {
+    background-color: $selected;
+    color: white;
+    .text-success {
+      color: white;
+    }
+  }
+
+}
+.highlighted{
+  background-color: desaturate(darken(yellow, 20), 50);
 }

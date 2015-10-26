@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class MainController
+ * @package Webview\Controller
+ */
 class MainController implements ControllerProviderInterface {
 
     protected $app;
@@ -17,6 +21,10 @@ class MainController implements ControllerProviderInterface {
         $this->app = $app;
     }
 
+    /**
+     * @param Application $app
+     * @return mixed
+     */
     public function connect(Application $app){
         $controllers = $app['controllers_factory'];
 
@@ -26,10 +34,19 @@ class MainController implements ControllerProviderInterface {
         return $controllers;
     }
 
+    /**
+     * Default page action
+     * @return mixed
+     */
     public function defaultAction(){
         return $this->app['twig']->render('page.html.twig');
     }
 
+    /**
+     * Handles the search action // does the crawling
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function searchAction(Request $request){
         $search =  $request->request->get('search', null);
 

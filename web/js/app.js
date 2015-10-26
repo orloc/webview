@@ -1,1 +1,1 @@
-angular.module('webview', ['hljs']);
+angular.module('webview', ['hljs', 'angular-ladda']);
