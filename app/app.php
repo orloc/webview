@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Pulls various parts of the application
+ */
+
 require_once __DIR__.'/bootstrap.php';
 
 $app = new Silex\Application();
