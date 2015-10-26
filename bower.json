@@ -16,6 +16,8 @@
   "dependencies": {
     "angularjs": "~1.4.7",
     "bootstrap": "~3.3.5",
-    "fontawesome": "~4.4.0"
+    "fontawesome": "~4.4.0",
+    "highlightjs": "~8.8.0",
+    "angular-highlightjs": "~0.4.3"
   }
 }

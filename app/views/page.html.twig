@@ -1,10 +1,10 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="col-xs-1"></div>
-    <div class="col-xs-10" ng-app="webview" ng-controller="mainController">
+    <div class="col-xs-12" ng-app="webview" ng-controller="mainController">
         <h2 class="text-center text-capitalize">Enter a URL to fetch</h2>
         <form name="uriForm" ng-submit="submit()">
+            <div class="alert alert-warning" ng-show="error_message.length">{{ '{{ error_message }}' }}</div>
             <div class="input-group">
                 <span class="input-group-addon">
                     <i ng-class="{
@@ -25,18 +25,27 @@
             <button ng-disabled="uriForm.$valid !== true" class="btn btn-primary btn-block" type="submit">Search</button>
         </form>
 
-        <div class="row">
-            <div class="col-sm-6">
+        <div class="row" ng-show="html_data.length">
+            <div class="col-sm-12">
                 <p class="text-center">Click on the tag type to highlight.</p>
+                <div class="row">
+                    <div class="col-xs-3" ng-repeat="(k,t) in totals" ng-click="highlightItems(k, t)">
+                        <p class="text-center">
+                            <span class="text-uppercase text-success">{{ '{{ k }}' }}</span>
+                            <br>
+                            <span class="small">
+                                {{ '{{ t }}' }} Time(s)
+                            </span>
+                        </p>
+                    </div>
+                </div>
             </div>
-
-            <div class="col-sm-6">
-                <code>
-                </code>
+                <div class="col-sm-12">
+                    <div hljs source="html_data"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-xs-1"></div>
 {% endblock %}
 
 {% block javascripts %}

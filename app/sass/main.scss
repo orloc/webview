@@ -1,6 +1,12 @@
 body {
   padding-top: 70px;
   font-family: 'Roboto', sans-serif;
+
+  background-color: lighten(black, 80);
+}
+
+pre {
+  padding: 0;
 }
 
 form {

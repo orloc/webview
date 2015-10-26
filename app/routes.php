@@ -43,21 +43,25 @@ $app->post('/search', function(Request $request) use ($app){
 
         $crawler = new Crawler($dom);
 
-        $names = [];
+        $data = [];
         foreach ($crawler->filter('*') as $elm){
-            $names[] = $elm->tagName;
+            if (!isset($data[$elm->tagName])){
+                $data[$elm->tagName] = 0;
+            }
+
+            $data[$elm->tagName]++;
         }
 
-        return new JsonResponse(['names' => $names]);
+        $returnData = [
+            'raw' => trim($dom," \n\t\s"),
+            'totals' => $data
+        ];
+
+        return new JsonResponse($returnData);
 
     } catch (BadResponseException $e){
         return new JsonResponse(['message' => $e->getMessage()], $e->getCode());
     }
-
-
-
-
-
 })->before(function(Request $request, Application $app){
      // Decodes JSON Body content if present
     if (in_array($request->getMethod(), ['POST', 'PATCH']) && 0 === strpos($request->headers->get('Content-Type'), 'application/json')) {

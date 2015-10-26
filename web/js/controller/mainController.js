@@ -3,17 +3,28 @@ angular.module('webview')
         $scope.input = {};
 
         var success = function(data){
-
-            console.log(data);
-
+            $scope.html_data = data.data.raw;
+            $scope.totals = data.data.totals;
         };
 
         var error = function(error){
+            $scope.error_message = error.status == 404
+                ? 'Sorry the URL you requested, '+ $scope.input.search +' was not found - bummer.'
+                : (error.status == 400
+                    ? 'Opps.. looks like something might be wrong - maybe you have a malformed URL ?'
+                    : 'Something Bad Happened - Be sure we are hard at slee.. work fixing it!');
 
+            $scope.input = {};
         };
 
         $scope.submit = function(){
-            $http.post('/search', $scope.input).then(success, error);
+            $scope.error_message = '';
+
+            $http.post('/search', $scope.input)
+                .then(success, error)
+                .then(function(){
+                    hljs.initHighlighting();
+            });
         };
 
 
