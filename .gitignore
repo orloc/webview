@@ -3,4 +3,5 @@ vendor/
 *.swo
 *~
 .idea/
+web/bower
 

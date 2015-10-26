@@ -1,0 +1,19 @@
+{
+  "name": "webview",
+  "version": "0.0.0",
+  "authors": [
+    "Grant Tepper <grant.tepper@gmail.com>"
+  ],
+  "description": "A small application for parsing web source code",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularjs": "~1.4.7"
+  }
+}
