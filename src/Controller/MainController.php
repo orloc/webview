@@ -8,9 +8,6 @@ use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints as Assert;
-use GuzzleHttp\Exception\BadResponseException;
-use Symfony\Component\DomCrawler\Crawler;
-use GuzzleHttp\Client;
 
 class MainController implements ControllerProviderInterface {
 
@@ -44,40 +41,14 @@ class MainController implements ControllerProviderInterface {
             return new JsonResponse(['message' => $e->getMessage()], 400);
         }
 
-        $scraper = $this->app['webview.scraper'];
-        die;
-
-
-        /*
-        $client = new Client();
+        $scraper = $this->app['webview.scraper']();
 
         try {
-            $response = $client->get($search);
+            $data = $scraper->scrapePage($search);
 
-            $dom = $response->getBody()->getContents();
-
-            $crawler = new Crawler($dom);
-
-            $data = [];
-            foreach ($crawler->filter('*') as $elm){
-                if (!isset($data[$elm->tagName])){
-                    $data[$elm->tagName] = 0;
-                }
-
-                $data[$elm->tagName]++;
-            }
-
-            $returnData = [
-                'raw' => trim($dom," \n\t\s"),
-                'totals' => $data
-            ];
-
-            return new JsonResponse($returnData);
-
-        } catch (BadResponseException $e){
+            return new JsonResponse($data);
+        } catch (\Exception $e){
             return new JsonResponse(['message' => $e->getMessage()], $e->getCode());
         }
-        */
-
     }
 }

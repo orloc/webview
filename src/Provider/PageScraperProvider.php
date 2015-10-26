@@ -15,9 +15,9 @@ class PageScraperProvider implements ServiceProviderInterface {
 
     public function register(Application $app){
         $app['webview.scraper'] = $app->protect(function() use ($app){
+            $scraper = new PageScraper($app['monolog']);
 
-            var_dump(array_keys($app));die;
-            $scaper = new PageScraper($app['lo']);
+            return $scraper;
         });
     }
 

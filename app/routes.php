@@ -4,11 +4,13 @@
  * Routing Definitions
  */
 
-require __DIR__.'middleware.php';
+require __DIR__.'/middleware.php';
 
 $controller = new \Webview\Controller\MainController($app);
 
 
-$controller->connect($app)
+$factory = $controller->connect($app)
     ->before(checkPostContent());
+
+$app->mount('', $factory);
 
