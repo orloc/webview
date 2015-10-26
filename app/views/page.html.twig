@@ -4,6 +4,26 @@
     <div class="col-xs-2"></div>
     <div class="col-xs-8" ng-app="webview" ng-controller="mainController">
         <h1 class="text-center text-capitalize">Enter a URL to fetch</h1>
+        <form name="uriForm">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i ng-class="{
+                        'fa-check text-success': uriForm.$valid === true,
+                        'fa-times text-danger': uriForm.$invalid === true
+                       }"
+                       class="fa"></i>
+                </span>
+                <input name="url"
+                       type="url"
+                       required
+                       ng-model="input.search"
+                       class="form-control">
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+            <button ng-disabled="uriForm.$valid !== true" class="btn btn-primary btn-block" type="submit">Search</button>
+        </form>
     </div>
     <div class="col-xs-2"></div>
 {% endblock %}
