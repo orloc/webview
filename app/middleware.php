@@ -4,6 +4,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 
 
+/**
+ * Middlewares
+ * @return Closure
+ */
 function checkPostContent(){
     return function (Request $request, Application $app){
         // Decodes JSON Body content if present

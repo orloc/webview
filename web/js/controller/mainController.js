@@ -50,6 +50,4 @@ angular.module('webview')
                     $scope.input = {};
                 });
         };
-
-
     }]);
