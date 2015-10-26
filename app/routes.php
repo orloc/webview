@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints as Assert;
 use Silex\Application;
+use GuzzleHttp\Exception\BadResponseException;
+use Symfony\Component\DomCrawler\Crawler;
+use GuzzleHttp\Client;
 
 /**
  * Renders html for Angular app
@@ -31,7 +34,27 @@ $app->post('/search', function(Request $request) use ($app){
         return new JsonResponse(['message' => $e->getMessage()], 400);
     }
 
-    
+    $client = new Client();
+
+    try {
+        $response = $client->get($search);
+
+        $dom = $response->getBody()->getContents();
+
+        $crawler = new Crawler($dom);
+
+        $names = [];
+        foreach ($crawler->filter('*') as $elm){
+            $names[] = $elm->tagName;
+        }
+
+        return new JsonResponse(['names' => $names]);
+
+    } catch (BadResponseException $e){
+        return new JsonResponse(['message' => $e->getMessage()], $e->getCode());
+    }
+
+
 
 
 
