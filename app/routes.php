@@ -4,7 +4,9 @@
  * Routing Definitions
  */
 
-use \Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints as Assert;
 use Silex\Application;
 
 /**
@@ -18,8 +20,20 @@ $app->get('/', function() use ($app){
  * Handles form post
  */
 $app->post('/search', function(Request $request) use ($app){
-    var_dump($request->request->all());
-    die;
+
+    $search =  $request->request->get('search', null);
+
+    $errors = $app['validator']->validate($search, new Assert\Url());
+
+    if (count($errors) > 0){
+        // we know there can only be one invalid field
+        $e = array_shift($errors->getIterator()->getArrayCopy());
+        return new JsonResponse(['message' => $e->getMessage()], 400);
+    }
+
+    
+
+
 
 })->before(function(Request $request, Application $app){
      // Decodes JSON Body content if present
