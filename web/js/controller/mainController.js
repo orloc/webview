@@ -21,7 +21,16 @@ angular.module('webview')
 
         $scope.highlightItems = function(k){
             $scope.dehighlightItems();
-            $('.hljs-title:contains("'+k+'")').addClass('highlighted');
+            var targets = $('.hljs-title:contains("'+k+'")');
+
+            // sanity check
+            var filteredTargets = _.filter(targets, function(d){
+                var text = $(d).text();
+                return k === text;
+            });
+
+            $(filteredTargets).addClass('highlighted');
+
             $scope.selected_tag = k;
         };
 

@@ -19,6 +19,7 @@
     "fontawesome": "~4.4.0",
     "highlightjs": "~8.8.0",
     "angular-highlightjs": "~0.4.3",
-    "angular-ladda": "~0.3.1"
+    "angular-ladda": "~0.3.1",
+    "lodash": "~3.10.1"
   }
 }
