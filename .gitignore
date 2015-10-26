@@ -4,4 +4,6 @@ vendor/
 *~
 .idea/
 web/bower
+.sass-cache/
+*.css
 
