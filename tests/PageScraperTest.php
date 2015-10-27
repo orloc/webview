@@ -55,7 +55,7 @@ class PageScraperTest extends PHPUnit_Framework_TestCase{
 
         $this->assertArrayHasKey('raw', $result);
         $this->assertArrayHasKey('totals', $result);
-        $this->assertEquals(strlen($data), strlen($result['raw']));
+        $this->assertEquals($data, $result['raw']);
 
 
         $totals = $result['totals'];
