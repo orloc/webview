@@ -82,7 +82,9 @@ class PageScraperTest extends PHPUnit_Framework_TestCase{
     }
 
     protected function getFileData($name){
-        return file_get_contents(__DIR__."/testData/$name");
+        return file_get_contents(
+            implode(DIRECTORY_SEPARATOR, [__DIR__,"testData",$name])
+        );
     }
 
 }
