@@ -1,3 +1,4 @@
+'use strict';
 angular.module('webview')
 .controller('mainController', [ '$scope', '$http', function($scope, $http){
         $scope.input = {};
@@ -45,7 +46,7 @@ angular.module('webview')
 
             $http.post('/search', $scope.input)
                 .then(success, error)
-                .then(function(){
+                .finally(function(){
                     $scope.loading = false;
                     $scope.input = {};
                 });
