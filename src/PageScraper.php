@@ -3,7 +3,7 @@
 namespace Webview;
 
 use GuzzleHttp\Client;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use GuzzleHttp\Exception\BadResponseException;
 
@@ -14,12 +14,20 @@ use GuzzleHttp\Exception\BadResponseException;
  */
 class PageScraper {
 
+    protected $client;
+
+    protected $crawler;
+
     protected $log;
 
     /**
-     * @param Logger $log
+     * @param Client $client
+     * @param Crawler $crawler
+     * @param LoggerInterface $log
      */
-    public function __construct(Logger $log){
+    public function __construct(Client $client, Crawler $crawler, LoggerInterface $log){
+        $this->client = $client;
+        $this->crawler = $crawler;
         $this->log = $log;
     }
 
@@ -30,21 +38,18 @@ class PageScraper {
      * @throws BadResponseException
      */
     public function scrapePage($uri){
-        $client = new Client();
-
-        $this->log->addDebug(sprintf('Attempting to fetch %s', $uri));
+        $this->log->debug(sprintf('Attempting to fetch %s', $uri));
 
         try {
-            $response = $client->get($uri);
+            $response = $this->client->get($uri);
             $dom = $response->getBody()->getContents();
 
             $data = $this->parseDom($dom);
-            $this->log->addDebug(sprintf('SUCCESS - Fetched %s', $uri));
+            $this->log->debug(sprintf('SUCCESS - Fetched %s', $uri));
 
             return $data;
-
         } catch (BadResponseException $e){
-            $this->log->addError(sprintf('ERROR %s - Fetching %s with %s', $e->getCode(), $uri, $e->getMessage()));
+            $this->log->error(sprintf('ERROR %s - Fetching %s with %s', $e->getCode(), $uri, $e->getMessage()));
             throw $e;
         }
     }
@@ -55,10 +60,11 @@ class PageScraper {
      * @return array
      */
     protected function parseDom($dom){
-        $crawler = new Crawler($dom);
-
         $data = [];
-        foreach ($crawler->filter('*') as $elm){
+
+        $this->crawler->add($dom);
+
+        foreach ($this->crawler->filter('*') as $elm){
             if (!isset($data[$elm->tagName])){
                 $data[$elm->tagName] = 0;
             }

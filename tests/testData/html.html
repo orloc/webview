@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Web View</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:500' rel='stylesheet' type='text/css'>
+    <link href="/bower/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bower/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower/ladda/dist/ladda-themeless.min.css">
+    <link href="/bower/highlightjs/styles/dark.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Web View <span class="small">By Grant Tepper</span></a>
+        </div>
+    </div>
+</nav>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+                <div class="col-xs-12 page-container" ng-app="webview" ng-controller="mainController" ng-cloak>
+        <div class="search-group">
+            <h2 class="text-center text-capitalize">Enter a URL to fetch</h2>
+            <form name="uriForm" ng-submit="submit()">
+                <div class="alert alert-warning" ng-show="error_message.length">{{ error_message }}</div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i ng-class="{
+                            'fa-check text-success': uriForm.$valid === true,
+                            'fa-times text-danger': uriForm.$invalid === true
+                           }"
+                           class="fa"></i>
+                    </span>
+                    <input name="url"
+                           type="url"
+                           required
+                           ng-model="input.search"
+                           class="form-control">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <button ladda="loading" ng-disabled="uriForm.$valid !== true" class="btn btn-lg btn-block btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="row" ng-show="html_data.length && !loading" ng-cloak>
+            <div class="col-sm-12">
+                <p class="text-center">
+                    <span ng-show="selected_tag === null" >Click on a tag to highlight them.</span>
+                    <span ng-show="selected_tag !== null" >The {{ selected_tag }} tags should be highlighted</span>
+                    <button ng-click="dehighlightItems()" class="btn btn-sm small pull-right"><i class="fa fa-times text-danger"></i>&nbsp;&nbsp;Clear</button>
+                </p>
+                <br>
+                <div class="row">
+                    <div class="col-xs-2 tag" ng-class="{ 'selected': selected_tag == k}" ng-repeat="(k,t) in totals" ng-click="highlightItems(k)">
+                        <p class="text-center">
+                            <span class="text-uppercase text-success"><{{ k }}></span>
+                            <br>
+                            <span class="small">
+                                {{ t }} Time(s)
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+                <div class="col-sm-12">
+                    <div hljs source="html_data"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <script src="/bower/jquery/dist/jquery.min.js"></script>
+    <script src="/bower/lodash/lodash.min.js"></script>
+    <script src="bower/ladda/dist/spin.min.js"></script>
+    <script src="bower/ladda/dist/ladda.min.js"></script>
+    <script src="/bower/highlightjs/highlight.pack.min.js"></script>
+    <script src="/bower/angularjs/angular.min.js"></script>
+    <script src="bower/angular-ladda/dist/angular-ladda.min.js"></script>
+    <script src="/bower/angular-highlightjs/angular-highlightjs.js"></script>
+    <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <script src="/js/app.js"></script>
+    <script src="/js/controller/mainController.js"></script>
+</body>
+</html>

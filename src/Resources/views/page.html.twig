@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="col-xs-12 page-container" ng-app="webview" ng-controller="mainController">
+    <div class="col-xs-12 page-container" ng-app="webview" ng-controller="mainController" ng-cloak>
         <div class="search-group">
             <h2 class="text-center text-capitalize">Enter a URL to fetch</h2>
             <form name="uriForm" ng-submit="submit()">
@@ -27,12 +27,12 @@
             </form>
         </div>
 
-        <div class="row" ng-show="html_data.length && !loading">
+        <div class="row" ng-show="html_data.length && !loading" ng-cloak>
             <div class="col-sm-12">
                 <p class="text-center">
                     <span ng-show="selected_tag === null" >Click on a tag to highlight them.</span>
-                    <span ng-show="selected_tag !== null" >The {{ '{{ selected_tag }}' }} tags should be highlighted</span>
-                    <button ng-click="dehighlightItems()" class="btn btn-sm small pull-right"><i class="fa fa-times text-danger"></i>&nbsp;&nbsp;Clear</button>
+                    <span ng-show="selected_tag !== null" >The <b>{{ '{{ selected_tag }}' }}</b> tags should be highlighted</span>
+                    <button ng-show="selected_tag !== null" ng-click="dehighlightItems()" class="btn btn-sm small pull-right"><i class="fa fa-times text-danger"></i>&nbsp;&nbsp;Clear</button>
                 </p>
                 <br>
                 <div class="row">

@@ -2,8 +2,10 @@
 
 namespace Webview\Provider;
 
+use GuzzleHttp\Client;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Symfony\Component\DomCrawler\Crawler;
 use Webview\PageScraper;
 
 /**
@@ -15,7 +17,11 @@ class PageScraperProvider implements ServiceProviderInterface {
 
     public function register(Application $app){
         $app['webview.scraper'] = $app->protect(function() use ($app){
-            $scraper = new PageScraper($app['monolog']);
+
+            $client = new Client();
+            $crawler = new Crawler();
+
+            $scraper = new PageScraper($client, $crawler, $app['monolog']);
 
             return $scraper;
         });
